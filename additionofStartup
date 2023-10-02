@@ -1,0 +1,62 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+class Animal
+{
+    inline static int numOfAnimals;
+private:
+    string name;
+    string species;
+public:
+    Animal(string theName, string theSpecies)
+    {
+    name = theName;
+    species = theSpecies;
+
+    numOfAnimals++;
+    }
+
+    string getAnimalName()
+    {
+        return name;
+    }
+    string getAnimalSpecies()
+    {
+        return species;
+    }
+    int getNumOfAnimals()
+    {
+        return numOfAnimals;
+    }
+};
+
+class Hyena:public Animal
+{
+private:
+    int weight;
+public:
+    Hyena(int theWeight):Animal("string1", "string1")
+    {
+        weight = theWeight;
+    }
+};
+
+int main()
+{
+    Animal myAnimal = Animal("Zigg","hyena");
+
+    Animal myAnimal2 = Animal("Happy","hyena");
+
+    Hyena myHyena = Hyena(70);
+
+    cout << "name should be string\n" << myHyena.getAnimalName() << endl;
+
+    cout << myAnimal.getAnimalName() << myAnimal.getAnimalSpecies() << endl;
+
+    cout << myAnimal.getNumOfAnimals() << endl;
+
+    return 0;
+}
