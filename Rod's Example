@@ -1,0 +1,116 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+
+using namespace std; // Use the std namespace
+
+// Define a struct for an animal name
+struct AnimalName {
+    string name;
+    AnimalName* next;
+
+    AnimalName(const string& n) : name(n), next(nullptr) {}
+};
+
+// Define a struct for a species linked list node
+struct SpeciesNode {
+    SpeciesNode* next;
+    AnimalName* namesHead;
+    string speciesName;
+
+    SpeciesNode(const string& name) : speciesName(name), next(nullptr), namesHead(nullptr) {}
+};
+
+// Function to add a new species to the linked list
+void addSpecies(SpeciesNode*& head, SpeciesNode*& current, const string& name) {
+    SpeciesNode* newSpecies = new SpeciesNode(name);
+    if (!head) {
+        head = newSpecies;
+        current = newSpecies;
+    }
+    else {
+        current->next = newSpecies;
+        current = newSpecies;
+    }
+}
+
+// Function to add a name to the linked list of names for a species
+void addName(AnimalName*& namesHead, const string& name) {
+    AnimalName* newName = new AnimalName(name);
+    newName->next = namesHead;
+    namesHead = newName;
+}
+
+// Function to print the linked list of names for a species
+void printNames(const AnimalName* namesHead) {
+    const AnimalName* currentName = namesHead;
+    while (currentName) {
+        cout << "  " << currentName->name << endl;
+        currentName = currentName->next;
+    }
+}
+
+int main() {
+    // Open the file
+    ifstream inputFile("C:\\Users\\BE129\\Downloads\\animalNames.txt");
+
+    if (!inputFile.is_open()) {
+        cerr << "Failed to open the file." << endl;
+        return 1;
+    }
+
+    string line;
+    SpeciesNode* headSpecies = nullptr;
+    SpeciesNode* currentSpecies = nullptr;
+
+    // Read each line in the file
+    while (getline(inputFile, line)) {
+        if (line.find(" Names:") != string::npos) {
+            // Extract the species name
+            string speciesName = line.substr(0, line.find(" Names:"));
+            addSpecies(headSpecies, currentSpecies, speciesName);
+        }
+        else if (currentSpecies) {
+            // Read and create a linked list of names for the current species
+            istringstream nameStream(line);
+            string name;
+
+            // Split the line into individual names
+            while (getline(nameStream, name, ',')) {
+                addName(currentSpecies->namesHead, name);
+            }
+        }
+    }
+
+    inputFile.close();
+
+    // Display all species and their names
+    SpeciesNode* current = headSpecies;
+    while (current) {
+        cout << current->speciesName << " Names:" << endl;
+        printNames(current->namesHead);
+        cout << endl;
+        current = current->next;
+    }
+
+    // Search for and print a specific species
+    string speciesToSearch = "Hyena"; // Replace with the species you want to search
+
+    cout << "Enter a species name to search for: ";
+    getline(cin, speciesToSearch);
+
+    current = headSpecies;
+    while (current) {
+        if (current->speciesName == speciesToSearch) {
+            cout << current->speciesName << " Names:" << endl;
+            printNames(current->namesHead);
+            break; // No need to continue searching after finding the species
+        }
+        current = current->next;
+    }
+
+    // Memory cleanup is not performed in this version.
+
+    return 0;
+}
