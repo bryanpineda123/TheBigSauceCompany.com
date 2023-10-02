@@ -1,0 +1,74 @@
+#include <iostream>
+#include <list>
+#include <string>
+#include <fstream>
+
+using namespace std;
+
+class Animal
+{
+private:
+    string name = "";
+    string species = "";
+    string sex;
+    double weight;
+    int age;
+
+public:
+    static inline int numOfAnimals = 0;
+    Animal(string theName, string theSpecies)
+    {
+        name = theName;
+        species = theSpecies;
+        numOfAnimals++;
+
+    }
+    string getAnimalName()
+    {
+        return name;
+    }
+    string getAnimalSpecies()
+    {
+        return species;
+    }
+
+    int getNumOfAnimals()
+    {
+        return numOfAnimals;
+    }
+
+
+};
+
+int main()
+{
+
+    cout << "\n Welcome to my Midterm Check In!! \n" << endl;
+
+    cout << " Num of animals is: " << Animal::numOfAnimals << "\n\n";
+
+    // Create an animal object
+    Animal myNewAnimal01("I expect a NAME", "and SPECIES"); //argument for parameter in line 17
+    // Create another animal object
+    Animal animaltwo("This is my Second ANIMAL NAME", "Hyena");
+
+    cout << " \n\nAfter creating a couple animals, numOfAnimals is " << Animal::numOfAnimals << "\n\n";
+
+    //Evaluate the public members
+    // Cannot do this, these are private members, use construct (line 17) to access public domain at line 16.
+    //myNewAnimal01.name = "Name One";
+    // myNewAnimal01.species = "Hyena";
+
+    cout << " The name of this animal is: " << myNewAnimal01.getAnimalName() << endl;
+    cout << " The species name of this animal is: " << myNewAnimal01.getAnimalSpecies() << endl;
+
+    cout << " The name of this animal is: " << animaltwo.getAnimalName() << endl;
+    cout << " The species name of this animal is: " << animaltwo.getAnimalSpecies() << endl;
+
+    Animal::numOfAnimals+=5;
+
+    cout << " Num of animals is: " << Animal::numOfAnimals << "\n\n"; // just added five //GetNumOfAnimals
+
+
+    return 0;
+}
