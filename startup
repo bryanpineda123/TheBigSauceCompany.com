@@ -1,0 +1,67 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+class Animal
+{
+    inline static int numOfAnimals;
+private:
+    string name;
+    string species;
+public:
+    Animal(string theName, string theSpecies)
+    {
+    name = theName;
+    species = theSpecies;
+
+    numOfAnimals++;
+    }
+
+    string getAnimalName()
+    {
+        return name;
+    }
+    string getAnimalSpecies()
+    {
+        return species;
+    }
+    int getNumOfAnimals()
+    {
+        return numOfAnimals;
+    }
+};
+
+int main()
+{
+    //converts file contents into a string
+    fstream myFile;
+    myFile.open("C:\\Users\\BE129\\Downloads\\animalNames.txt", ios::in);//read
+
+    string fileContents;
+
+    if(myFile.is_open())
+    {
+        string line;
+        while(getline(myFile, line))
+        {
+            fileContents += line + '\n';
+        }
+        myFile.close();
+    }
+
+    //cout << fileContents;
+    //end of part one
+
+    //create an Animal object USE FILE TO GET ANIMAL NAMES THEN FIND A METHOD TO PUT THEM INTO GROUPS
+
+    Animal myAnimal = Animal("Zigg","hyena");
+    Animal myAnimal2 = Animal("Happy","hyena");
+
+    cout << myAnimal.getAnimalName() << myAnimal.getAnimalSpecies() << endl;
+
+    cout << myAnimal.getNumOfAnimals() << endl;
+
+    return 0;
+}
