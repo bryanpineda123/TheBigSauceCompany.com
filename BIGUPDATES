@@ -1,0 +1,33 @@
+class Hyena
+{
+private:
+    static int numOfHyenas;
+    string name;
+    int age;
+    string birthDate;
+    string furColor;
+    string sex;
+    int weight;
+    string origin;
+    string arrivalDate;
+
+public:
+    Hyena(string theName, int theAge, string theBirthDate, string theFurColor, string theSex,
+          int theWeight, string theOrigin, string theArrivalDate)
+        : name(theName), age(theAge), birthDate(theBirthDate), furColor(theFurColor),
+          sex(theSex), weight(theWeight), origin(theOrigin), arrivalDate(theArrivalDate)
+    {
+        numOfHyenas++;
+    }
+
+    static int getNumOfHyenas()
+    {
+        return numOfHyenas;
+    }
+
+    // Getter functions for member variables
+    string getName() const { return name; }
+    int getAge() const { return age; }
+    string getBirthDate() const { return birthDate; }
+    // ... other getters
+};
