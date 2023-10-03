@@ -1,0 +1,154 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+class Animal
+{
+    inline static int numOfAnimals;
+private:
+    string name;
+    string species;
+    string birthDate;
+    string furColor;
+    string sex;
+    string habitat;
+    int age;
+    int weight;
+public:
+    Animal(string theName, string theSpecies, string thebirthDate, string thefurColor; string thesex; string thehabitat)
+    {
+        name = theName;
+        species = theSpecies;
+        birthDate = thebirthDate;
+        furColor = thefurColor;
+        sex = thesex;
+        habitat = thehabitat;
+        age = 0;
+        weight = 0;
+
+        numOfAnimals++;
+    }
+
+    string getAnimalName()
+    {
+        return name;
+    }
+
+    string getAnimalSpecies()
+    {
+        return species;
+    }
+
+    string getAnimalbirthDate()
+    {
+        return birthDate;
+    }
+
+    string getAnimalfurColor()
+    {
+        return furColor;
+    }
+    string getAnimalsex
+    {
+        return sex;
+    }
+
+    string getAnimalhabitat
+    {
+        return habitat;
+    }
+
+    int getAge()
+    {
+        return age;
+    }
+
+    int getWeight()
+    {
+        return weight;
+    }
+
+    int getNumOfAnimals()
+    {
+        return numOfAnimals;
+    }
+    void setWeight(int theWeight)
+    {
+        weight = theWeight;
+    }
+    void setAge(int theAge)
+    {
+        weight = theAge;
+    }
+
+};
+
+class Hyena : public Animal
+{
+public:
+    Hyena(string theName, int theWeight, int theAge) : Animal(theName, "Hyena")
+    {
+        setWeight(theWeight);
+        setAge(theAge);
+    }
+
+    string getAnimalName()
+    {
+        return to_string(getWeight());
+    }
+};
+
+class Lion : public Animal
+{
+public:
+    Lion(string theName, int theWeight) : Animal(theName, "Lion")
+    {
+        setWeight(theWeight);
+    }
+
+    string getAnimalName()
+    {
+        return to_string(getWeight());
+    }
+};
+
+class Bear : public Animal
+{
+public:
+    Bear(string theName, int theWeight) : Animal(theName, "Bear")
+    {
+        setWeight(theWeight);
+    }
+
+    string getAnimalName()
+    {
+        return to_string(getWeight());
+    }
+};
+
+class Tiger : public Animal
+{
+public:
+    Tiger(string theName, int theWeight) : Animal(theName, "Tiger")
+    {
+        setWeight(theWeight);
+    }
+
+    string getAnimalName()
+    {
+        return to_string(getWeight());
+    }
+};
+
+int main()
+{
+    fstream myFile;
+    myFile.open("C:\\Users\\pined\\Downloads\\animalNames.txt", ios::in);//read
+    myFile.close();
+
+
+
+    return 0;
+}
