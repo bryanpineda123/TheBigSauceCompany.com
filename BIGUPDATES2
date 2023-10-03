@@ -1,0 +1,27 @@
+// Inside your main function or another function where you read data from the file
+
+vector<Hyena> hyenas;
+vector<Lion> lions;
+// ... similar vectors for Tiger and Bear
+
+// Read data from the file and create objects
+
+// Example for reading Hyena data
+while (/* read hyena data from the file */)
+{
+    Hyena newHyena(/* pass data read from the file */);
+    hyenas.push_back(newHyena);
+}
+
+// Similar loops for reading data for Lion, Tiger, and Bear
+
+// Display information
+cout << "Hyena Habitat:" << endl;
+for (const auto &hyena : hyenas)
+{
+    cout << hyena.getName() << "; " << hyena.getAge() << " years old; birth date "
+         << hyena.getBirthDate() << "; " << hyena.getFurColor() << " color; " << hyena.getSex() << "; "
+         << hyena.getWeight() << " pounds; from " << hyena.getOrigin() << "; arrived " << hyena.getArrivalDate() << endl;
+}
+
+// Similar loops for Lion, Tiger, and Bear
