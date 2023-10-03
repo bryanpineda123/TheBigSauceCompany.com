@@ -1,0 +1,84 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+class Animal
+{
+    inline static int numOfAnimals;
+private:
+    string name;
+    string species;
+    int weight;
+public:
+    Animal(string theName, string theSpecies)
+    {
+        name = theName;
+        species = theSpecies;
+        weight = 0;
+
+        numOfAnimals++;
+    }
+
+    string getAnimalName()
+    {
+        return name;
+    }
+
+    string getAnimalSpecies()
+    {
+        return species;
+    }
+
+    void setWeight(int theWeight)
+    {
+        weight = theWeight;
+    }
+
+    int getWeight()
+    {
+        return weight;
+    }
+
+    int getNumOfAnimals()
+    {
+        return numOfAnimals;
+    }
+};
+
+class Hyena : public Animal
+{
+public:
+    Hyena(string theName, int theWeight) : Animal(theName, "Hyena")
+    {
+        setWeight(theWeight);
+    }
+
+    string getAnimalName()
+    {
+        return to_string(getWeight());
+    }
+};
+
+int main()
+{
+    fstream myFile;
+    myFile.open("C:\\Users\\pined\\Downloads\\animalNames.txt", ios::in);//read
+
+    string fileContents;
+
+    if(myFile.is_open())
+    {
+        string line;
+        while(getline(myFile, line))
+        {
+            fileContents += line + '\n';
+        }
+        myFile.close();
+    }
+
+
+    
+    return 0;
+}
