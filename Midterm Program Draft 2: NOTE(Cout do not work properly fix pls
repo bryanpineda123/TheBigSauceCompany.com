@@ -1,0 +1,117 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Animal
+{
+private:
+    static int numOfAnimals;
+    string name;
+    string species;
+    string birthDate;
+    string furColor;
+    string sex;
+    string habitat;
+    int age;
+    int weight;
+
+public:
+    Animal(string theName, string theSpecies, string theBirthDate, string theFurColor, string theSex, string theHabitat)
+        : name(theName), species(theSpecies), birthDate(theBirthDate), furColor(theFurColor), sex(theSex), habitat(theHabitat), age(0), weight(0)
+    {
+        numOfAnimals++;
+    }
+
+    string getAnimalName() const
+    {
+        return name;
+    }
+
+    string getAnimalSpecies() const
+    {
+        return species;
+    }
+
+    string getAnimalBirthDate() const
+    {
+        return birthDate;
+    }
+
+    string getAnimalFurColor() const
+    {
+        return furColor;
+    }
+
+    string getAnimalSex() const
+    {
+        return sex;
+    }
+
+    string getAnimalHabitat() const
+    {
+        return habitat;
+    }
+
+    static int getNumOfAnimals()
+    {
+        return numOfAnimals;
+    }
+};
+
+int Animal::numOfAnimals = 0;
+
+int main()
+{
+    fstream myFile;
+    myFile.open("C:\\Users\\pined\\Downloads\\animalNames.txt", ios::in);
+
+    vector<Animal> animals;
+
+    if (myFile.is_open())
+    {
+        string line;
+        string animalType;
+        string name;
+        string species;
+        string birthDate;
+        string furColor;
+        string habitat;
+
+        while (getline(myFile, line))
+        {
+            if (line.find("Names:") != string::npos)
+            {
+                getline(myFile, animalType);
+                for (int i = 0; i < 5; ++i)
+                {
+                    getline(myFile, name, ',');
+                    getline(myFile, species, ',');
+                    getline(myFile, birthDate, ',');
+                    getline(myFile, furColor, ',');
+                    getline(myFile, habitat);
+
+                    Animal newAnimal(name, species, birthDate, furColor, "female", habitat);
+                    animals.push_back(newAnimal);
+                }
+            }
+        }
+        myFile.close();
+
+        // Display animals
+        for (const auto &animal : animals)
+        {
+            cout << "Animal: " << animal.getAnimalName() << ", Species: " << animal.getAnimalSpecies()
+                 << ", Birth Date: " << animal.getAnimalBirthDate() << ", Fur Color: " << animal.getAnimalFurColor()
+                 << ", Sex: " << animal.getAnimalSex() << ", Habitat: " << animal.getAnimalHabitat() << endl;
+        }
+    }
+    else
+    {
+        cout << "Error opening file." << endl;
+    }
+
+    return 0;
+}
