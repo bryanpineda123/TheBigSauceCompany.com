@@ -1,0 +1,169 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Animal
+{
+
+private:
+    string name;
+    string species;
+
+    inline static int numOfAnimals;
+public:
+    Animal(string theName, string theSpecies)
+    {
+    name = theName;
+    species = theSpecies;
+
+    numOfAnimals++;
+    }
+
+    string getAnimalName()
+    {
+        return name;
+    }
+    string getAnimalSpecies()
+    {
+        return species;
+    }
+    int getNumOfAnimals()
+    {
+        return numOfAnimals;
+    }
+};
+
+class Hyena:public Animal //super class
+{
+private:
+    int weight;
+    int age;
+    inline static int numOfHyenas;
+public:
+    Hyena(string theName, string theSpecies):Animal(theName, theSpecies)
+    {
+    numOfHyenas++;
+    }
+    int getNumOfHyenas()
+    {
+        return numOfHyenas;
+    }
+};
+
+class Lion:public Animal //super class
+{
+private:
+    int weight;
+    int age;
+    inline static int numOfLions;
+public:
+    Lion(string theName, string theSpecies):Animal(theName, theSpecies)
+    {
+    numOfLions++;
+    }
+    int getNumOfLions()
+    {
+        return numOfLions;
+    }
+};
+
+class Bear:public Animal //super class
+{
+private:
+    int weight;
+    int age;
+    inline static int numOfBears;
+public:
+    Bear(string theName, string theSpecies):Animal(theName, theSpecies)
+    {
+    numOfBears++;
+    }
+    int getNumOfBears()
+    {
+        return numOfBears;
+    }
+};
+
+class Tiger:public Animal //super class
+{
+private:
+    int weight;
+    int age;
+    inline static int numOfTigers;
+public:
+    Tiger(string theName, string theSpecies):Animal(theName, theSpecies)
+    {
+    numOfTigers++;
+    }
+    int getNumOfTigers()
+    {
+        return numOfTigers;
+    }
+};
+
+int main()
+{
+    Animal myAnimal01 = Animal("Zigg","Hyena");
+    Animal myAnimal02 = Animal("Happy","Hyena");
+    Animal myAnimal03 = Animal("Ed", "Hyena");
+
+    Hyena myHyena01 = Hyena("Kamari", "Hyena"); //set weight for hyena
+    Hyena myHyena02 = Hyena("Madoa", "Hyena");
+
+    Lion myLion01 = Lion("Mufasa", "Lion");
+    Lion myLion02 = Lion("Simba", "Lion");
+
+    Tiger myTiger01 = Tiger("Tony", "Tiger");
+    Tiger myTiger02 = Tiger("Tigger", "Tiger");
+
+    Bear myBear01 = Bear("Yogi", "Bear");
+    Bear myBear02 = Bear("Smokey", "Bear");
+    Bear myBear03 = Bear("Paddlington", "Bear");
+
+    cout << "The Hyena's name is: " << myHyena01.getAnimalName() << "\n\n";
+
+    cout << "\n Number of Animals: " << myAnimal02.getNumOfAnimals() << "\n\n";
+
+    cout << "\n Number of Hyenas: " << myHyena01.getNumOfHyenas() << "\n\n";
+
+    cout << "\n Number of Lions: " << myLion01.getNumOfLions() << "\n\n";
+
+    cout << "\n Number of Tigers: " << myTiger01.getNumOfTigers() << "\n\n";
+
+    cout << "\n Number of Bears: " << myBear01.getNumOfBears() << "\n\n";
+
+
+    string filePath = "C:\\Users\\BE129\\Downloads\\arrivingAnimals.txt";
+    ifstream myFile(filePath);
+
+    if(!myFile)
+    {
+        cerr << "Error opening the file." << endl;
+        return 1;
+    }
+
+    cout << "File opened successfully." << endl;
+
+    // You can add your code to read and process the file content here
+
+    vector<Animal> animalList;
+
+    string line;
+    while (getline(myFile, line))
+    {
+      //substrings add to make the code work parse
+
+    myFile.close();
+
+    for (Animal someAnimal : animalList)
+    {
+        cout << "\n\n Name: " << someAnimal.getAnimalName() << "\n\n";
+        //cout << "\n\n Species: " << someAnimal.getNumOfAnimals() << endl;
+    }
+
+
+    return 0;
+}
