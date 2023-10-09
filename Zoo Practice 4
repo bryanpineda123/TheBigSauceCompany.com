@@ -1,0 +1,179 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Animal
+{
+private:
+    string name; //inlist
+    string species; //inlist
+    string birthday; //season, fall winter summer spring
+    string furColor; //list
+    string sex; //list
+    string habitat; //use birthday to determine
+    int weight; //list
+    int age; //list
+    string id; // Unique ID for each animal done
+
+    inline static int numOfAnimals;
+    inline static int nextAnimalId = 1;
+public:
+    Animal(string theName, string theSpecies, string thefurColor, string thesex, string thebirthday, int theweight, int theage)
+    {
+        name = theName;
+        species = theSpecies;
+        furColor = thefurColor;
+        sex = thesex;
+        birthday = thebirthday;
+        weight = theweight;
+        age = theage;
+
+        string abbreviation = string(1, tolower(theSpecies[0])) + string(1, tolower(theSpecies[1]));
+        id = abbreviation + to_string(nextAnimalId++);
+
+        numOfAnimals++;
+    }
+
+    string getAnimalName()
+    {
+        return name;
+    }
+    string getAnimalSpecies()
+    {
+        return species;
+    }
+
+    string getFurColor()
+    {
+        return furColor;
+    }
+
+    string getSex()
+    {
+        return sex;
+    }
+
+    string getBirthday()
+    {
+        return birthday;
+    }
+
+    int getWeight()
+    {
+        return weight;
+    }
+
+    int getAge()
+    {
+        return age;
+    }
+
+    int getNumOfAnimals()
+    {
+        return numOfAnimals;
+    }
+    string getAnimalId()
+    {
+        return id;
+    }
+};
+
+class Hyena : public Animal //super class
+{
+private:
+    inline static int numOfHyenas;
+public:
+    Hyena(string theName, string theSpecies, string thefurColor, string thesex, string thebirthday, int theweight, int theage) : Animal(theName, theSpecies, thefurColor, thesex, thebirthday, theweight, theage)
+    {
+        numOfHyenas++;
+    }
+    int getNumOfHyenas()
+    {
+        return numOfHyenas;
+    }
+};
+
+class Lion : public Animal //super class
+{
+private:
+    inline static int numOfLions;
+public:
+    Lion(string theName, string theSpecies, string thefurColor, string thesex, string thebirthday, int theweight, int theage) : Animal(theName, theSpecies, thefurColor, thesex, thebirthday, theweight, theage)
+    {
+        numOfLions++;
+    }
+    int getNumOfLions()
+    {
+        return numOfLions;
+    }
+};
+
+class Bear : public Animal //super class
+{
+private:
+    inline static int numOfBears;
+public:
+    Bear(string theName, string theSpecies, string thefurColor, string thesex, string thebirthday, int theweight, int theage) : Animal(theName, theSpecies, thefurColor, thesex, thebirthday, theweight, theage)
+    {
+        numOfBears++;
+    }
+    int getNumOfBears()
+    {
+        return numOfBears;
+    }
+};
+
+class Tiger : public Animal //super class
+{
+private:
+    inline static int numOfTigers;
+public:
+    Tiger(string theName, string theSpecies, string thefurColor, string thesex, string thebirthday, int theweight, int theage) : Animal(theName, theSpecies, thefurColor, thesex, thebirthday, theweight, theage)
+    {
+        numOfTigers++;
+    }
+    int getNumOfTigers()
+    {
+        return numOfTigers;
+    }
+};
+
+int main()
+{
+    //SuperClass VariableName = SuperClass("name", "species", "furcolor", "sex", "birthday", weight, age)
+    Animal myAnimal01 = Animal("Zigg", "Hyena");
+    Animal myAnimal02 = Animal("Happy", "Hyena");
+    Animal myAnimal03 = Animal("Ed", "Hyena");
+
+    Hyena myHyena01 = Hyena("Kamari", "Hyena"); //set weight for hyena
+    Hyena myHyena02 = Hyena("Madoa", "Hyena");
+
+    Lion myLion01 = Lion("Mufasa", "Lion");
+    Lion myLion02 = Lion("Simba", "Lion");
+
+    Tiger myTiger01 = Tiger("Tony", "Tiger");
+    Tiger myTiger02 = Tiger("Tigger", "Tiger");
+
+    Bear myBear01 = Bear("Yogi", "Bear");
+    Bear myBear02 = Bear("Smokey", "Bear");
+    Bear myBear03 = Bear("Paddlington", "Bear");
+
+    cout << "The Hyena's name is: " << myHyena01.getAnimalName() << "\n\n";
+
+    cout << "\n Number of Animals: " << myAnimal02.getNumOfAnimals() << "\n\n";
+
+    cout << "\n Number of Hyenas: " << myHyena01.getNumOfHyenas() << "\n\n";
+
+    cout << "\n Number of Lions: " << myLion01.getNumOfLions() << "\n\n";
+
+    cout << "\n Number of Tigers: " << myTiger01.getNumOfTigers() << "\n\n";
+
+    cout << "\n Number of Bears: " << myBear01.getNumOfBears() << "\n\n";
+
+    cout << "Animal ID: " << myLion02.getAnimalId() << endl;
+
+    return 0;
+}
