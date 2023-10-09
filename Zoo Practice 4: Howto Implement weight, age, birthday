@@ -1,0 +1,101 @@
+#include <iostream>
+#include <string>
+
+class Animal {
+public:
+    Animal(const std::string& name, double weight, const std::string& species, const std::string& birthday)
+        : name(name), weight(weight), species(species), birthday(birthday), age(0) {}
+
+    // Increment age
+    void incrementAge() {
+        age++;
+    }
+
+    // Display animal information
+    void displayInfo() const {
+        std::cout << "Name: " << name << std::endl;
+        std::cout << "Species: " << species << std::endl;
+        std::cout << "Weight: " << weight << " kg" << std::endl;
+        std::cout << "Birthday: " << birthday << std::endl;
+        std::cout << "Age: " << age << " years" << std::endl;
+        std::cout << std::endl;
+    }
+
+    std::string getName() const {
+        return name;
+    }
+
+    double getWeight() const {
+        return weight;
+    }
+
+    std::string getSpecies() const {
+        return species;
+    }
+
+    std::string getBirthday() const {
+        return birthday;
+    }
+
+    int getAge() const {
+        return age;
+    }
+
+private:
+    std::string name;
+    double weight;
+    std::string species;
+    std::string birthday;
+    int age;
+};
+
+class Lion : public Animal {
+public:
+    Lion(const std::string& name, double weight, const std::string& birthday)
+        : Animal(name, weight, "Lion", birthday) {
+        numOfLions++;
+    }
+
+    static int getNumOfLions() {
+        return numOfLions;
+    }
+
+private:
+    static int numOfLions;
+};
+
+int Lion::numOfLions = 0;
+
+class Tiger : public Animal {
+public:
+    Tiger(const std::string& name, double weight, const std::string& birthday)
+        : Animal(name, weight, "Tiger", birthday) {
+        numOfTigers++;
+    }
+
+    static int getNumOfTigers() {
+        return numOfTigers;
+    }
+
+private:
+    static int numOfTigers;
+};
+
+int Tiger::numOfTigers = 0;
+
+class Bear : public Animal {
+public:
+    Bear(const std::string& name, double weight, const std::string& birthday)
+        : Animal(name, weight, "Bear", birthday) {
+        numOfBears++;
+    }
+
+    static int getNumOfBears() {
+        return numOfBears;
+    }
+
+private:
+    static int numOfBears;
+};
+
+... (119 lines left)
