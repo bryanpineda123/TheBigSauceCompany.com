@@ -1,0 +1,25 @@
+ string arrivingAnimalsFile = "C:\\Users\\BE129\\Downloads\\arrivingAnimals.txt";
+    string animalNamesFile = "C:\\Users\\BE129\\Downloads\\animalNames.txt";
+    ifstream arrivingAnimalsContents(arrivingAnimalsFile);
+    ifstream animalNamesContents(animalNamesFile);
+
+    if(!arrivingAnimalsContents && animalNamesContents)
+    {
+        cerr << "Error opening the file." << endl;
+        return 1;
+    }
+
+    cout << "File opened successfully." << endl;
+
+    // You can add your code to read and process the file content here
+
+    vector<Animal> animalList;
+
+    string line;
+    while (getline(arrivingAnimalsContents, line)) // does not have animalNames
+    {
+      //substrings add to make the code work parse
+
+    arrivingAnimalsContents.close();
+    animalNamesContents.close();
+    cout << "closing files" << endl;
