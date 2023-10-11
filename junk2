@@ -1,0 +1,198 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <chrono>
+#include <sstream>
+
+using namespace std;
+
+class Animal
+{
+private:
+    string name;
+    string species;
+    string birthday;
+    string furColor;
+    string sex;
+    string habitat;
+    int weight;
+    int age;
+    string id;
+
+    inline static int numOfAnimals;
+    inline static int nextAnimalId = 1;
+public:
+    Animal(string theName, string theSpecies, string thefurColor, int theweight, int theage)
+    {
+        name = theName;
+        species = theSpecies;
+        furColor = thefurColor;
+        weight = theweight;
+        age = theage;
+
+        string abbreviation = string(1, tolower(theSpecies[0])) + string(1, tolower(theSpecies[1]));
+        id = abbreviation + to_string(nextAnimalId++);
+
+        numOfAnimals++;
+    }
+
+    string getAnimalName()
+    {
+        return name;
+    }
+    string getAnimalSpecies()
+    {
+        return species;
+    }
+
+    string getFurColor()
+    {
+        return furColor;
+    }
+
+    int getWeight()
+    {
+        return weight;
+    }
+
+    int getAge()
+    {
+        return age;
+    }
+
+    int getNumOfAnimals()
+    {
+        return numOfAnimals;
+    }
+    string getAnimalId()
+    {
+        return id;
+    }
+};
+
+class Hyena : public Animal //super class
+{
+private:
+    inline static int numOfHyenas;
+public:
+    Hyena(string theName, string theSpecies, string thefurColor, int theweight, int theage) : Animal(theName, theSpecies, thefurColor, theweight, theage)
+    {
+        numOfHyenas++;
+    }
+    int getNumOfHyenas()
+    {
+        return numOfHyenas;
+    }
+};
+
+class Lion : public Animal //super class
+{
+private:
+    inline static int numOfLions;
+public:
+    Lion(string theName, string theSpecies, string thefurColor, int theweight, int theage) : Animal(theName, theSpecies, thefurColor, theweight, theage)
+    {
+        numOfLions++;
+    }
+    int getNumOfLions()
+    {
+        return numOfLions;
+    }
+};
+
+class Bear : public Animal //super class
+{
+private:
+    inline static int numOfBears;
+public:
+    Bear(string theName, string theSpecies, string thefurColor, int theweight, int theage) : Animal(theName, theSpecies, thefurColor, theweight, theage)
+    {
+        numOfBears++;
+    }
+    int getNumOfBears()
+    {
+        return numOfBears;
+    }
+};
+
+class Tiger : public Animal //super class
+{
+private:
+    inline static int numOfTigers;
+public:
+    Tiger(string theName, string theSpecies, string thefurColor, int theweight, int theage) : Animal(theName, theSpecies, thefurColor, theweight, theage)
+    {
+        numOfTigers++;
+    }
+    int getNumOfTigers()
+    {
+        return numOfTigers;
+    }
+};
+
+// Function to calculate the birthdate for a 4-year-old hyena born in the spring
+string calculateHyenaBirthdate(string description, string birthSeason) {
+
+    // Parse the birth season and create a date for March 21 of the current year
+    chrono::system_clock::time_point today = chrono::system_clock::now();
+    time_t now_c = chrono::system_clock::to_time_t(today);
+    tm now_tm = *localtime(&now_c);
+
+    int birthMonth = 3;  // March
+    int birthDay = 21;
+
+    // Check if the description contains the word "female" to determine the gender
+    bool isFemale = (description.find("female") != string::npos);
+
+    // Calculate the birth year based on the age (4 years old)
+    int birthYear = now_tm.tm_year + 1900 - 4;
+
+    // Create a string to represent the birthdate
+    ostringstream oss;
+    oss << "The " << (isFemale ? "female " : "") << "hyena born in " << birthSeason << " has a birthdate of "
+        << birthMonth << "/" << birthDay << "/" << birthYear;
+
+    return oss.str();
+}
+
+int main()
+{
+    string animal01 = "4 year old female hyena, born in spring, tan color, 70 pounds, from Friguia";
+
+    // Split the string into tokens using ',' as the delimiter
+    istringstream ss(animal01);
+    vector<string> tokens;
+    string token;
+    while (getline(ss, token, ','))
+    {
+        tokens.push_back(token);
+    }
+
+    // Extract the information from the tokens
+    string ageStr = tokens[0];
+    string birthSeason = tokens[1];
+    string furColor = tokens[2];
+    string weightStr = tokens[3];
+    string description = tokens[4]; // This contains species and additional information
+
+    // Extract the age and weight from the respective strings
+    int age = stoi(ageStr);
+    int weight = stoi(weightStr);
+
+    // Create a Hyena object
+    Hyena myHyena("Name", "Hyena", furColor, weight, age);
+
+    // Calculate and display the hyena's birthdate
+    string birthdate = calculateHyenaBirthdate(description, birthSeason);
+
+    cout << "\n Name: " << myHyena.getAnimalName() << endl;
+    cout << "\n Age: " << myHyena.getAge() << endl;
+    cout << "\n FurColor: " << myHyena.getFurColor() << endl;
+    cout << "\n ID: " << myHyena.getAnimalId() << endl;
+    cout << "\n Species: " << myHyena.getAnimalSpecies() << endl;
+    cout << "\n Weight: " << myHyena.getWeight() << endl;
+    cout << "\n Birthdate: " << birthdate << endl;
+
+    return 0;
+}
