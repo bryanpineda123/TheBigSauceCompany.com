@@ -1,0 +1,326 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <chrono>
+#include <sstream>
+
+using namespace std;
+
+class Animal; // Forward declaration to resolve the circular dependency
+// Define a struct for a linked list node
+struct AnimalNode {
+    Animal* animalInstance;
+    AnimalNode* next;
+
+    AnimalNode(Animal* a) : animalInstance(a), next(nullptr) {}
+};
+
+class Animal
+{
+private:
+    //Animal Characteristics
+    string name;
+    string species;
+    string birthday;
+    string furColor;
+    string sex;
+    string habitat;
+    int weight;
+    int age;
+    string id;
+
+    //Static Int Variables for ID and Total Number
+    inline static int numOfAnimals;
+    inline static int nextAnimalId = 1;
+
+    // Pointers for the linked list
+    static AnimalNode* head;
+    static AnimalNode* tail;
+    static AnimalNode* current;
+
+    // Function to calculate birthdate based on description and birth month
+    string calculateAnimalBirthdate(string description, int birthMonth) {
+    string seasons[] = {"winter", "spring", "summer", "fall"};
+    int seasonIndex = (birthMonth % 12) / 3;
+    string birthSeason = seasons[seasonIndex];
+
+    //Gender Assignment
+    bool isFemale = (description.find("female") != string::npos);
+    bool isMale = (description.find("male") != string::npos);
+
+    // Calculate the birth year based on the age
+    chrono::system_clock::time_point today = chrono::system_clock::now();
+    time_t now_c = chrono::system_clock::to_time_t(today);
+    tm now_tm = *localtime(&now_c);
+    int birthYear = now_tm.tm_year + 1900 - 4;
+
+    // Create a string to represent the birthdate with the appropriate gender and season tags
+    ostringstream oss;
+    oss << "The " << (isFemale ? "female " : (isMale ? "male " : "")) << "hyena born in " << birthSeason
+        << " has a birthdate of " << birthMonth << "/21/" << birthYear;
+
+        return oss.str();
+    }
+public:
+    //Animal Constructor
+    Animal(string theName, string theSpecies, string thefurColor, int theweight, int theage)
+    {
+        //Animal info creation
+        name = theName;
+        species = theSpecies;
+        furColor = thefurColor;
+        weight = theweight;
+        age = theage;
+
+        //Animal ID creation
+        string abbreviation = string(1, tolower(theSpecies[0])) + string(1, tolower(theSpecies[1]));
+        id = abbreviation + to_string(nextAnimalId++);
+
+        //Number of Animals
+        numOfAnimals++;
+
+         //linked list
+        AnimalNode* newNode = new AnimalNode(this);
+        if (head == nullptr) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+    // Function to iterate through the linked list
+    //Incomplete linked List
+    static void resetList() {
+        current = head;
+    }
+
+    static Animal* getNextAnimal() {
+        if (current == nullptr) {
+            return nullptr;
+        }
+        Animal* animal = current->animalInstance;
+        current = current->next;
+        return animal;
+    }
+    //Getter for Animal Name
+    string getAnimalName()
+    {
+        return name;
+    }
+    //Getter for Animal Species
+    string getAnimalSpecies()
+    {
+        return species;
+    }
+    //Getter for Animal FurColor
+    string getFurColor()
+    {
+        return furColor;
+    }
+    //Getter for Animal Weight
+    int getWeight()
+    {
+        return weight;
+    }
+    //Getter for Animal Age
+    int getAge()
+    {
+        return age;
+    }
+    //Getter for total Number of Animals
+    int getNumOfAnimals()
+    {
+        return numOfAnimals;
+    }
+    //Getter for Animal ID
+    string getAnimalId()
+    {
+        return id;
+    }
+    //Getter for Birthdate
+    string getAnimalBirthdate(string description, int birthMonth)
+    {
+        return calculateAnimalBirthdate(description, birthMonth);
+    }
+};
+
+// Initialize static linked list pointers
+AnimalNode* Animal::head = nullptr;
+AnimalNode* Animal::tail = nullptr;
+AnimalNode* Animal::current = nullptr;
+
+//Hyena Class
+class Hyena : public Animal
+{
+private:
+    inline static int numOfHyenas;
+public:
+    Hyena(string theName, string theSpecies, string thefurColor, int theweight, int theage) : Animal(theName, theSpecies, thefurColor, theweight, theage)
+    {
+        numOfHyenas++;
+    }
+    int getNumOfHyenas()
+    {
+        return numOfHyenas;
+    }
+};
+
+//Lion Class
+class Lion : public Animal
+{
+private:
+    inline static int numOfLions;
+public:
+    Lion(string theName, string theSpecies, string thefurColor, int theweight, int theage) : Animal(theName, theSpecies, thefurColor, theweight, theage)
+    {
+        numOfLions++;
+    }
+    int getNumOfLions()
+    {
+        return numOfLions;
+    }
+};
+
+//Bear Class
+class Bear : public Animal
+{
+private:
+    inline static int numOfBears;
+public:
+    Bear(string theName, string theSpecies, string thefurColor, int theweight, int theage) : Animal(theName, theSpecies, thefurColor, theweight, theage)
+    {
+        numOfBears++;
+    }
+    int getNumOfBears()
+    {
+        return numOfBears;
+    }
+};
+
+//Tiger Class
+class Tiger : public Animal
+{
+private:
+    inline static int numOfTigers;
+public:
+    Tiger(string theName, string theSpecies, string thefurColor, int theweight, int theage) : Animal(theName, theSpecies, thefurColor, theweight, theage)
+    {
+        numOfTigers++;
+    }
+    int getNumOfTigers()
+    {
+        return numOfTigers;
+    }
+};
+
+int main()
+{
+    // File containing animal names and arriving animals
+    fstream AnimalNames;
+    fstream ArrivingAnimals;
+    ArrivingAnimals.open("C:\\Users\\pined\\Downloads\\arrivingAnimals.txt", ios::in);
+    AnimalNames.open("C:\\Users\\pined\\Downloads\\animalNames.txt", ios::in);
+
+    // Create linked lists for different animal species
+    AnimalNode* hyenaHead = nullptr;
+    AnimalNode* lionHead = nullptr;
+    AnimalNode* bearHead = nullptr;
+    AnimalNode* tigerHead = nullptr;
+
+    // Parse Hyena names from AnimalNames.txt and create Hyena objects
+    string line;
+    while (getline(AnimalNames, line)) {
+        if (line == "Hyena Names:") {
+            while (getline(AnimalNames, line) && !line.empty()) {
+                stringstream ss(line);
+                string name;
+                ss >> name;
+                Hyena* hyena = new Hyena(name, "Hyena", "Unknown", 0, 0);
+                AnimalNode* newNode = new AnimalNode(hyena);
+                if (hyenaHead == nullptr) {
+                    hyenaHead = newNode;
+                } else {
+                    AnimalNode* temp = hyenaHead;
+                    while (temp->next != nullptr) {
+                        temp = temp->next;
+                    }
+                    temp->next = newNode;
+                }
+            }
+        }
+        // Repeat the same process for other animal species (Lion, Bear, Tiger)
+        // ...
+    }
+
+    // Parse arriving animals and create Animal objects
+    while (getline(ArrivingAnimals, line)) {
+        stringstream ss(line);
+        string description;
+        getline(ss, description, ',');
+        string birthSeason;
+        getline(ss, birthSeason, ',');
+        string furColor;
+        getline(ss, furColor, ',');
+        int weight;
+        ss >> weight;
+        string habitat;
+        getline(ss, habitat, ',');
+
+        // Determine the animal species based on description and create corresponding objects
+        if (description.find("hyena") != string::npos) {
+            Hyena* hyena = new Hyena(description, "Hyena", furColor, weight, 0);
+            AnimalNode* newNode = new AnimalNode(hyena);
+            if (hyenaHead == nullptr) {
+                hyenaHead = newNode;
+            } else {
+                AnimalNode* temp = hyenaHead;
+                while (temp->next != nullptr) {
+                    temp = temp->next;
+                }
+                temp->next = newNode;
+            }
+        }
+        // Repeat the same process for other animal species (Lion, Bear, Tiger)
+        // ...
+    }
+
+    // Iterate and print animals for each species
+    Animal::resetList();
+    Hyena::resetList();
+    Lion::resetList();
+    Bear::resetList();
+    Tiger::resetList();
+
+    cout << "Hyena Habitat:" << endl;
+    while (Animal* animal = Hyena::getNextAnimal()) {
+        cout << "Animal ID: " << animal->getAnimalId() << " Name: "
+             << animal->getAnimalName() << " Age: "
+             << animal->getAge() << " years old. Birthdate: "
+             << animal->getAnimalBirthdate("", 0) << ", "
+             << animal->getFurColor() << " Weight: "
+             << animal->getWeight() << " pounds." << endl;
+    }
+
+    // Repeat the same process for other animal species (Lion, Bear, Tiger)
+    // ...
+
+    // Clean up the memory by deleting the linked list nodes
+    AnimalNode* temp;
+    while (hyenaHead != nullptr) {
+        temp = hyenaHead;
+        hyenaHead = hyenaHead->next;
+        delete temp->animalInstance;
+        delete temp;
+    }
+
+    // Repeat the same process for other animal species (Lion, Bear, Tiger)
+    // ...
+
+    // Close the file streams
+    AnimalNames.close();
+    ArrivingAnimals.close();
+
+    return 0;
+}
