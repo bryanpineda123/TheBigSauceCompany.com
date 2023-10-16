@@ -1,0 +1,229 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <chrono>
+#include <sstream>
+
+using namespace std;
+
+class Animal; // Forward declaration to resolve the circular dependency
+
+// Define a struct for a linked list node
+struct AnimalNode {
+    Animal* animalInstance;
+    AnimalNode* next;
+
+    AnimalNode(Animal* a) : animalInstance(a), next(nullptr) {}
+};
+
+class Animal
+{
+private:
+    string name;
+    string species;
+    string birthday;
+    string furColor;
+    string sex;
+    string habitat;
+    int weight;
+    int age;
+    string id;
+
+    inline static int numOfAnimals;
+    inline static int nextAnimalId = 1;
+
+    // Pointers for the linked list
+    static AnimalNode* head;
+    static AnimalNode* tail;
+    static AnimalNode* current;
+public:
+    Animal(string theName, string theSpecies, string thefurColor, int theweight, int theage)
+    {
+        name = theName;
+        species = theSpecies;
+        furColor = thefurColor;
+        weight = theweight;
+        age = theage;
+
+        string abbreviation = string(1, tolower(theSpecies[0])) + string(1, tolower(theSpecies[1]));
+        id = abbreviation + to_string(nextAnimalId++);
+
+        numOfAnimals++;
+
+         // Add this animal to the linked list
+        AnimalNode* newNode = new AnimalNode(this);
+        if (head == nullptr) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+    // Function to iterate through the linked list
+    static void resetList() {
+        current = head;
+    }
+
+    static Animal* getNextAnimal() {
+        if (current == nullptr) {
+            return nullptr;
+        }
+        Animal* animal = current->animalInstance;
+        current = current->next;
+        return animal;
+    }
+
+    string getAnimalName()
+    {
+        return name;
+    }
+    string getAnimalSpecies()
+    {
+        return species;
+    }
+
+    string getFurColor()
+    {
+        return furColor;
+    }
+
+    int getWeight()
+    {
+        return weight;
+    }
+
+    int getAge()
+    {
+        return age;
+    }
+
+    int getNumOfAnimals()
+    {
+        return numOfAnimals;
+    }
+    string getAnimalId()
+    {
+        return id;
+    }
+};
+
+// Initialize static linked list pointers
+AnimalNode* Animal::head = nullptr;
+AnimalNode* Animal::tail = nullptr;
+AnimalNode* Animal::current = nullptr;
+
+class Hyena : public Animal //super class
+{
+private:
+    inline static int numOfHyenas;
+public:
+    Hyena(string theName, string theSpecies, string thefurColor, int theweight, int theage) : Animal(theName, theSpecies, thefurColor, theweight, theage)
+    {
+        numOfHyenas++;
+    }
+    int getNumOfHyenas()
+    {
+        return numOfHyenas;
+    }
+};
+
+class Lion : public Animal //super class
+{
+private:
+    inline static int numOfLions;
+public:
+    Lion(string theName, string theSpecies, string thefurColor, int theweight, int theage) : Animal(theName, theSpecies, thefurColor, theweight, theage)
+    {
+        numOfLions++;
+    }
+    int getNumOfLions()
+    {
+        return numOfLions;
+    }
+};
+
+class Bear : public Animal //super class
+{
+private:
+    inline static int numOfBears;
+public:
+    Bear(string theName, string theSpecies, string thefurColor, int theweight, int theage) : Animal(theName, theSpecies, thefurColor, theweight, theage)
+    {
+        numOfBears++;
+    }
+    int getNumOfBears()
+    {
+        return numOfBears;
+    }
+};
+
+class Tiger : public Animal //super class
+{
+private:
+    inline static int numOfTigers;
+public:
+    Tiger(string theName, string theSpecies, string thefurColor, int theweight, int theage) : Animal(theName, theSpecies, thefurColor, theweight, theage)
+    {
+        numOfTigers++;
+    }
+    int getNumOfTigers()
+    {
+        return numOfTigers;
+    }
+};
+
+// Function to calculate the birthdate and season for a hyena
+string calculateHyenaBirthdate(string description, int birthMonth) {
+    // Define an array to map months to seasons
+    string seasons[] = {"winter", "spring", "summer", "fall"};
+
+    // Determine the season based on the birth month
+    int seasonIndex = (birthMonth % 12) / 3;
+    string birthSeason = seasons[seasonIndex];
+
+    // Check if the description contains the words "female" or "male" to determine the gender
+    bool isFemale = (description.find("female") != string::npos);
+    bool isMale = (description.find("male") != string::npos);
+
+    // Calculate the birth year based on the age (4 years old)
+    chrono::system_clock::time_point today = chrono::system_clock::now();
+    time_t now_c = chrono::system_clock::to_time_t(today);
+    tm now_tm = *localtime(&now_c);
+    int birthYear = now_tm.tm_year + 1900 - 4;
+
+    // Create a string to represent the birthdate with the appropriate gender and season tags
+    ostringstream oss;
+    oss << "The " << (isFemale ? "female " : (isMale ? "male " : "")) << "hyena born in " << birthSeason
+        << " has a birthdate of " << birthMonth << "/21/" << birthYear;
+
+    return oss.str();
+}
+
+
+int main()
+{
+    //SuperClass VariableName = SuperClass("name", "species", "furcolor", weight, age)
+    Animal myAnimal01 = Animal("Zigg", "Hyena", "Brown", 50, 12);
+
+    //information to help get an idea what things should be
+    cout << "\n Name: " << myAnimal01.getAnimalName() << endl;
+    cout << "\n Age: " << myAnimal01.getAge() << endl;
+    cout << "\n FurColor: " << myAnimal01.getFurColor() << endl;
+    cout << "\n ID: " << myAnimal01.getAnimalId() << endl;
+    cout << "\n Species: " << myAnimal01.getAnimalSpecies() << endl;
+    cout << "\n Weight: " << myAnimal01.getWeight() << endl;
+
+   string description = "4 year old female hyena";
+    int birthMonth = 6; // Assuming June, you can change this to the actual birth month
+    string birthdate = calculateHyenaBirthdate(description, birthMonth);
+    cout << "4 year old hyena's birthdate is: " << birthdate << endl;
+
+    string description2 = "5 year old male hyena";
+    int birthMonth2 = 7; // Assuming July, you can change this to the actual birth month
+    string birthdate2 = calculateHyenaBirthdate(description2, birthMonth2);
+    cout << "5 year old hyena's birthdate is: " << birthdate2 << endl;
+
+    return 0;
+}
