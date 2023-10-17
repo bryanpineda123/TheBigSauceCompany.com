@@ -1,0 +1,304 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <sstream>
+
+using namespace std;
+
+class AnimalNode {
+public:
+    string animalName;
+    AnimalNode* next;
+
+    AnimalNode(string name) : animalName(name), next(nullptr) {}
+};
+
+class LinkedList {
+public:
+    AnimalNode* head;
+    AnimalNode* tail;
+
+    LinkedList() : head(nullptr), tail(nullptr) {}
+
+    void addAnimalNode(string name) {
+        AnimalNode* newNode = new AnimalNode(name);
+        if (!head) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+};
+
+class Animal
+{
+private:
+    string name;
+    string species;
+    string furColor;
+    string sex;
+    int weight;
+    int age;
+    string id;
+
+    inline static int numOfAnimals;
+    inline static int nextAnimalId = 1;
+public:
+    Animal(string theName, string theSpecies, string thefurColor, string thesex, int theweight, int theage)
+    {
+        name = theName;
+        species = theSpecies;
+        furColor = thefurColor;
+        sex = thesex;
+        weight = theweight;
+        age = theage;
+
+        string abbreviation = string(1, tolower(theSpecies[0])) + string(1, tolower(theSpecies[1]));
+        id = abbreviation + to_string(nextAnimalId++);
+
+        numOfAnimals++;
+    }
+
+    string getAnimalName()
+    {
+        return name;
+    }
+    string getAnimalSpecies()
+    {
+        return species;
+    }
+
+    string getFurColor()
+    {
+        return furColor;
+    }
+
+    string getSex()
+    {
+        return sex;
+    }
+
+    int getWeight()
+    {
+        return weight;
+    }
+
+    int getAge()
+    {
+        return age;
+    }
+
+    int getNumOfAnimals()
+    {
+        return numOfAnimals;
+    }
+    string getAnimalId()
+    {
+        return id;
+    }
+};
+
+class Hyena : public Animal
+{
+private:
+    static int numOfHyenas;
+    static string habitat;
+
+public:
+    Hyena(string theName, string thefurColor, string thesex, int theweight, int theage) : Animal(theName, "Hyena", thefurColor, thesex, theweight, theage)
+    {
+        numOfHyenas++;
+    }
+
+    static string getHabitat()
+    {
+        return habitat;
+    }
+
+    static int getNumOfHyenas()
+    {
+        return numOfHyenas;
+    }
+};
+
+int Hyena::numOfHyenas = 0;
+string Hyena::habitat = "Savannas";
+
+
+class Lion : public Animal
+{
+private:
+    static int numOfLions;
+    static string habitat;
+
+public:
+    Lion(string theName, string thefurColor, string thesex, int theweight, int theage) : Animal(theName, "Lion", thefurColor, thesex, theweight, theage)
+    {
+        numOfLions++;
+    }
+
+    static string getHabitat()
+    {
+        return habitat;
+    }
+
+    static int getNumOfLions()
+    {
+        return numOfLions;
+    }
+};
+
+int Lion::numOfLions = 0;
+string Lion::habitat = "Savannas";
+
+class Bear : public Animal
+{
+private:
+    static int numOfBears;
+    static string habitat;
+
+public:
+    Bear(string theName, string thefurColor, string thesex, int theweight, int theage) : Animal(theName, "Bear", thefurColor, thesex, theweight, theage)
+    {
+        numOfBears++;
+    }
+
+    static string getHabitat()
+    {
+        return habitat;
+    }
+
+    static int getNumOfBears()
+    {
+        return numOfBears;
+    }
+};
+
+int Bear::numOfBears = 0;
+string Bear::habitat = "Forests";
+
+
+class Tiger : public Animal
+{
+private:
+    static int numOfTigers;
+    static string habitat;
+
+public:
+    Tiger(string theName, string thefurColor, string thesex, int theweight, int theage) : Animal(theName, "Tiger", thefurColor, thesex, theweight, theage)
+    {
+        numOfTigers++;
+    }
+
+    static string getHabitat()
+    {
+        return habitat;
+    }
+
+    static int getNumOfTigers()
+    {
+        return numOfTigers;
+    }
+};
+
+int Tiger::numOfTigers = 0;
+string Tiger::habitat = "Grasslands";
+
+int main()
+{
+    LinkedList hyenaList;
+    LinkedList lionList;
+    LinkedList bearList;
+    LinkedList tigerList;
+
+    fstream ArrivingAnimals;
+    ArrivingAnimals.open("C:\\Users\\pined\\Downloads\\arrivingAnimals.txt", ios::in);
+
+    fstream AnimalNames;
+    AnimalNames.open("C:\\Users\\pined\\Downloads\\animalNames.txt", ios::in);
+
+     fstream myFile;
+    myFile.open("C:\\Users\\pined\\Downloads\\animalNames.txt", ios::in);
+
+    string fileContents;
+
+    if (myFile.is_open()) {
+        string line;
+        while (getline(myFile, line)) {
+            fileContents += line + '\n';
+        }
+        myFile.close();
+
+        // Find positions of subareas
+        int positionHyena = fileContents.find("Hyena");
+        int positionLion = fileContents.find("Lion");
+        int positionBear = fileContents.find("Bear");
+        int positionTiger = fileContents.find("Tiger");
+
+        // Extract animal names based on subareas
+        string hyenaNames = fileContents.substr(positionHyena + 6, positionLion - positionHyena - 6);
+        string lionNames = fileContents.substr(positionLion + 5, positionBear - positionLion - 5);
+        string bearNames = fileContents.substr(positionBear + 5, positionTiger - positionBear - 5);
+        string tigerNames = fileContents.substr(positionTiger + 6);
+
+        //Output animal names
+        //cout << "Hyena Names:\n" << hyenaNames << endl;
+        //cout << "Lion Names:\n" << lionNames << endl;
+        //cout << "Bear Names:\n" << bearNames << endl;
+        //cout << "Tiger Names:\n" << tigerNames << endl;
+
+        string name;
+        stringstream hyenaStream(hyenaNames);
+        while (getline(hyenaStream, name, '\n')) {
+            hyenaList.addAnimalNode(name);
+        }
+
+        // Add lion names to the lionList
+        stringstream lionStream(lionNames);
+        while (getline(lionStream, name, '\n')) {
+            lionList.addAnimalNode(name);
+        }
+
+        // Add bear names to the bearList
+        stringstream bearStream(bearNames);
+        while (getline(bearStream, name, '\n')) {
+            bearList.addAnimalNode(name);
+        }
+
+        // Add tiger names to the tigerList
+        stringstream tigerStream(tigerNames);
+        while (getline(tigerStream, name, '\n')) {
+            tigerList.addAnimalNode(name);
+        }
+    } else {
+        cout << "Error opening the file." << endl;
+    }
+
+    AnimalNode* currentHyena = hyenaList.head;
+    while (currentHyena != nullptr) {
+        cout << "Hyena: " << currentHyena->animalName << endl;
+        currentHyena = currentHyena->next;
+    }
+
+    AnimalNode* currentLion = lionList.head;
+    while (currentLion != nullptr) {
+        cout << "Lion: " << currentLion->animalName << endl;
+        currentLion = currentLion->next;
+    }
+
+     AnimalNode* currentBear = bearList.head;
+    while (currentBear != nullptr) {
+        cout << "Bear: " << currentBear->animalName << endl;
+        currentBear = currentBear->next;
+    }
+     AnimalNode* currentTiger = tigerList.head;
+    while (currentTiger != nullptr) {
+        cout << "Tiger: " << currentTiger->animalName << endl;
+        currentTiger = currentTiger->next;
+    }
+
+    return 0;
+}
