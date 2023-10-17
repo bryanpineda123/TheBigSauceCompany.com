@@ -1,15 +1,16 @@
 #include <iostream>
 #include <fstream>
+#include <sstream> //another library for files: allows performing insertion, extraction, and other operations.
 #include <string>
 #include <vector>
-#include <sstream>
-#include <cstdlib>
-#include <ctime>
+#include <cstdlib>  //a part of the C++ standard library collection that provides the input and output methods of <stdio. h> library of C language. 
+#include <ctime> //converts the time value pointed to by time to local time in the form of a character string
 
 using namespace std;
 
 class Animal
 {
+//Every Characteristic of the Animals
 private:
     string name;
     string species;
@@ -18,12 +19,14 @@ private:
     int weight;
     int age;
     string id;
-
+//Static Int variables: cannot change
     inline static int numOfAnimals;
     inline static int nextAnimalId = 1;
 public:
+//Constructor parameter: accepts certain arguments in order to pass
     Animal(string theName, string theSpecies, string thefurColor, string thesex, int theweight, int theage)
     {
+//once passed: arguments get put into an algorithm, updated, then returned
         name = theName;
         species = theSpecies;
         furColor = thefurColor;
@@ -37,6 +40,7 @@ public:
         numOfAnimals++;
     }
 
+//Getters, helps us get information on int main()
     string getAnimalName() const
     {
         return name;
@@ -76,14 +80,18 @@ public:
     }
 };
 
+//Animal Super Classes
 class Hyena : public Animal
 {
 private:
+//static variables for number of hyenas and habitat
     static int numOfHyenas;
     static string habitat;
 
 public:
+//constructor to only allow certain arguments pass
     Hyena(string theName, string thefurColor, string thesex, int theweight, int theage) : Animal(theName, "Hyena", thefurColor, thesex, theweight, theage)
+   //Updating variables down here, if arguments are passed
     {
         numOfHyenas++;
     }
@@ -99,10 +107,12 @@ public:
     }
 };
 
+//Setting variables to default
+
 int Hyena::numOfHyenas = 0;
-string Hyena::habitat = "Savannas";
+string Hyena::habitat = "Savannas"; //Every animal within that domain is given their habitat
 
-
+//same idea applies to every other class
 
 class Lion : public Animal
 {
@@ -191,12 +201,21 @@ public:
 };
 
 int main() {
+
+    //random generator: allows the computer to randomly select names for arriving animals.
     srand(static_cast<unsigned>(time(0)));
+
+//hardcoded the names from animalnames.txt:
+//parsing the file would be extremely tedious, I would have to read the file and create variables for hyenas, lions, etc...
+//i would have to append each name, 
+//break them down into separate variables or a variable containing these names.
+//Then I would have to put it in a vector similar to this:
 
     vector<string> hyenaNames = {"Shenzi", "Banzai", "Ed", "Zig", "Bud", "Lou", "Kamari", "Wema", "Nne", "Madoa", "Prince Nevarah"};
     vector<string> lionNames = {"Scar", "Mufasa", "Simba", "Kiara", "King", "Drooper", "Kimba", "Nala", "Leo", "Samson", "Elsa", "Cecil"};
     vector<string> bearNames = {"Yogi", "Smokey", "Paddington", "Lippy", "Bungle", "Baloo", "Rupert", "Winnie the Pooh", "Snuggles", "Bert"};
     vector<string> tigerNames = {"Tony", "Tigger", "Amber", "Cosimia", "Cuddles", "Dave", "Jiba", "Rajah", "Rayas", "Ryker"};
+
 
     fstream myFileArriving;
     myFileArriving.open("C:\\Users\\pined\\Downloads\\arrivingAnimals.txt", ios::in);
