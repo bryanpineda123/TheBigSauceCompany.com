@@ -1,0 +1,12 @@
+//Animals that allow us to access GetNumOfAnimals or species
+    Animal myAnimal01 = Animal("?", "Hyena","?", "?", 60, 5);
+    Hyena myHyena01 = Hyena("?","?", "Male", 1, 1);
+    Lion myLion01 = Lion("?","?", "Male", 1, 1);
+    Bear myBear01 = Bear("?","?", "Male", 1, 1);
+    Tiger myTiger01 = Tiger("?","?", "Male", 1, 1);
+
+    //cout << "\nNumber of Animals: " << myAnimal01.getNumOfAnimals() - 5 << endl;
+    //cout << "\nNumber of Hyenas: " << myHyena01.getNumOfHyenas() - 1 << endl;
+    //cout << "\nNumber of Lions: " << myLion01.getNumOfLions() - 1 << endl;
+    //cout << "\nNumber of Bears: " << myBear01.getNumOfBears() - 1 << endl;
+    //cout << "\nNumber of Tigers: " << myTiger01.getNumOfTigers() - 1 << endl;
