@@ -1,0 +1,15 @@
+ //SuperClass VariableName = SuperClass("name", "species", "furcolor", "sex", "birthday", weight, age)
+    Hyena myHyena = Hyena("Zigg", "brown", "male", 1, 1);
+    Bear myBear = Bear("Baloo", "black", "male", 2, 3);
+    Tiger myTiger = Tiger("Heav", "Grey", "female", 2, 3);
+    Animal myAnimal = Animal("Jack", "Hyena", "Brown", "male", 7,4);
+
+    cout << "Hyena Habitat: " << Hyena::getHabitat() << endl;
+    cout << "Bear Habitat: " << Bear::getHabitat() << endl;
+    cout << "Tiger Habitat: " << Tiger::getHabitat() << endl;
+
+    cout << "Number of Hyenas: " << Hyena::getNumOfHyenas() << endl;
+    cout << "Number of Bears: " << Bear::getNumOfBears() << endl;
+    cout << "Number of Tiger: " << Tiger::getNumOfTigers() << endl;
+
+    cout << "Number of Animals: " << myAnimal.getNumOfAnimals() << endl;
