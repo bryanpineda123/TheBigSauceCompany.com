@@ -217,7 +217,7 @@ int main() {
     vector<string> bearNames = {"Yogi", "Smokey", "Paddington", "Lippy", "Bungle", "Baloo", "Rupert", "Winnie the Pooh", "Snuggles", "Bert"};
     vector<string> tigerNames = {"Tony", "Tigger", "Amber", "Cosimia", "Cuddles", "Dave", "Jiba", "Rajah", "Rayas", "Ryker"};
 
-
+    //File Opening
     fstream myFileArriving;
     myFileArriving.open("C:\\Users\\pined\\Downloads\\arrivingAnimals.txt", ios::in);
 
@@ -226,6 +226,7 @@ int main() {
         return 1;
     }
 
+    //Parsing the file
     string ArrivingHyenaNames, ArrivingLionNames, ArrivingBearNames, ArrivingTigerNames;
     string line2;
     while (getline(myFileArriving, line2)) {
@@ -250,6 +251,7 @@ int main() {
     }
     myFileArriving.close();
 
+    //creating separate vectors for every animal species, allows us to access that info
     vector<Hyena> hyenas;
     vector<Lion> lions;
     vector<Bear> bears;
