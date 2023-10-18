@@ -2,7 +2,7 @@
 #include <fstream>
 #include <sstream> //another library for files: allows performing insertion, extraction, and other operations.
 #include <string>
-#include <vector>
+#include <vector> //a class template for sequence containers, allow us to put multiple strings in a variable, almost like an array.
 #include <cstdlib>  //a part of the C++ standard library collection that provides the input and output methods of <stdio. h> library of C language. 
 #include <ctime> //converts the time value pointed to by time to local time in the form of a character string
 
@@ -294,6 +294,7 @@ int main() {
     int bearWeight, bearAge;
     while (getline(bearStream, bearLine))
     {
+        //parsing the file line, to help get names and data for those animals
         stringstream ss(bearLine);
         getline(ss, bearName, ':');
         getline(ss, bearLine);
@@ -325,6 +326,7 @@ int main() {
     AnimalNode* bearNode = nullptr;
     AnimalNode* tigerNode = nullptr;
 
+    //The const auto keyword by itself represents a value type, similar to int or char 
         // Populate linked lists with animals
     for (const auto& hyena : hyenas) {
         AnimalNode* newNode = new AnimalNode(&hyena);
@@ -352,7 +354,7 @@ int main() {
 
     // Print animals using the linked lists
     cout << "Hyenas in the zoo:\n";
-    AnimalNode* currentHyena = hyenaNode;
+    AnimalNode* currentHyena = hyenaNode; //A null pointer (nullptr) allows us to stop the linked list node from looping forever
     while (currentHyena != nullptr) {
         cout << "ID: " << currentHyena->animal->getAnimalId() << ", Name: " << currentHyena->animal->getAnimalName()
              << ", Species: " << currentHyena->animal->getAnimalSpecies() << ", Age: " << currentHyena->animal->getAge() << "\n";
@@ -390,6 +392,7 @@ int main() {
     Bear myBear01 = Bear("?","?", "Male", 1, 1);
     Tiger myTiger01 = Tiger("?","?", "Male", 1, 1);
 
+    //Printing the number of animals there are in the zoo/
     //cout << "\nNumber of Animals: " << myAnimal01.getNumOfAnimals() - 5 << endl;
     //cout << "\nNumber of Hyenas: " << myHyena01.getNumOfHyenas() - 1 << endl;
     //cout << "\nNumber of Lions: " << myLion01.getNumOfLions() - 1 << endl;
